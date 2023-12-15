@@ -1,24 +1,23 @@
 package com.example.counterapp
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
-class CounterViewModel: ViewModel()
+class CounterViewModel(): ViewModel()
 {
-    private var _count = mutableStateOf(0)
+    private val _repository: CounterRepository = CounterRepository()
+    private var _count = mutableStateOf(_repository.getCounter().count)
     val count =_count
 
     fun increment()
     {
-        _count.value+=1
+        _repository.incrementCounter()
+        _count.value = _repository.getCounter().count
     }
 
     fun decrement()
     {
-        _count.value-=1
+        _repository.decrementCounter()
+        _count.value = _repository.getCounter().count
     }
 }
